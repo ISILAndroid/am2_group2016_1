@@ -1,20 +1,22 @@
-package com.isil.am2template.view.fragments;
+package com.isil.fragments.view.fragments;
 
 import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import com.isil.am2template.R;
-import com.isil.am2template.view.OnMessageListener;
+import com.isil.fragments.R;
+import com.isil.fragments.view.OnMessageListener;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link TwoFragment.OnFragmentInteractionListener} interface
+ * {@link TwoFragment} interface
  * to handle interaction events.
  * Use the {@link TwoFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -24,12 +26,15 @@ public class TwoFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = "TwoFragment";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private OnMessageListener mListener;
+    private TextView tviMessage;
+    private String resultMessage;
 
     /**
      * Use this factory method to create a new instance of
@@ -85,5 +90,21 @@ public class TwoFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        tviMessage= (TextView)getView().findViewById(R.id.tviMessage);
+        resultMessage= "";
+    }
+
+    public void mostrarMensaje(String message)
+    {
+
+        Log.v(TAG, "mostrarMensaje " + message);
+        if(TextUtils.isEmpty(message))return;
+        resultMessage+="\n"+message;
+        tviMessage.setText(resultMessage);
     }
 }

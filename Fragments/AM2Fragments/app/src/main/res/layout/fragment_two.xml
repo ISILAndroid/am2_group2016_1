@@ -1,7 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.isil.am2template.view.fragments.TwoFragment"
+    tools:context="com.isil.fragments.view.fragments.TwoFragment"
     android:background="#9FF781">
 
 

@@ -1,4 +1,4 @@
-package com.isil.am2template.model;
+package com.isil.fragments.model;
 
 /**
  * Created by emedinaa on 25/08/15.

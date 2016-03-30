@@ -1,35 +1,42 @@
-package com.isil.am2template.view.fragments;
+package com.isil.fragments.view.fragments;
 
 import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
-import com.isil.am2template.R;
-import com.isil.am2template.view.OnFragmentListener;
+import com.isil.fragments.MessageActivity;
+import com.isil.fragments.R;
+import com.isil.fragments.view.OnMessageListener;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- *  interface
+ * interface
  * to handle interaction events.
- * Use the {@link AFragment#newInstance} factory method to
+ * Use the {@link OneFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AFragment extends Fragment {
+public class OneFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = "OneFragment";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentListener mListener;
+    private OnMessageListener mListener;
+    private EditText eteMessage;
+    private Button btnSend;
+    private String message;
 
     /**
      * Use this factory method to create a new instance of
@@ -37,11 +44,11 @@ public class AFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment AFragment.
+     * @return A new instance of fragment OneFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AFragment newInstance(String param1, String param2) {
-        AFragment fragment = new AFragment();
+    public static OneFragment newInstance(String param1, String param2) {
+        OneFragment fragment = new OneFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -49,7 +56,7 @@ public class AFragment extends Fragment {
         return fragment;
     }
 
-    public AFragment() {
+    public OneFragment() {
         // Required empty public constructor
     }
 
@@ -66,7 +73,7 @@ public class AFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_a, container, false);
+        return inflater.inflate(R.layout.fragment_one, container, false);
     }
 
 
@@ -74,7 +81,7 @@ public class AFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnFragmentListener) activity;
+            mListener = (OnMessageListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -87,5 +94,32 @@ public class AFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
+        eteMessage= (EditText)getView().findViewById(R.id.eteMessage);
+        btnSend= (Button)getView().findViewById(R.id.btnSend);
+
+        //TODO events...
+        btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                message= eteMessage.getText().toString();
+                Log.v(TAG, "1 message " + message);
+                ((MessageActivity)getActivity()).recibiryEnviarMensaje(message);
+            }
+        });
+
+        //btnSend.setOnClickListener(onClickListener);
+    }
+
+    private View.OnClickListener onClickListener= new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            message= eteMessage.getText().toString();
+            Log.v(TAG, "1. message " + message);
+            ((MessageActivity)getActivity()).recibiryEnviarMensaje(message);
+        }
+    };
 }

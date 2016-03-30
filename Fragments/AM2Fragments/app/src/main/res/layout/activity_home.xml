@@ -2,20 +2,20 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    tools:context="com.isil.am2template.HomeActivity">
+    tools:context="com.isil.fragments.HomeActivity">
 
 
     <fragment
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="fill_parent"
-        android:name="com.isil.am2template.view.fragments.AFragment"
+        android:name="com.isil.fragments.view.fragments.AFragment"
         android:id="@+id/fragmentA"/>
 
     <fragment
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="fill_parent"
-        android:name="com.isil.am2template.view.fragments.BFragment"
+        android:name="com.isil.fragments.view.fragments.BFragment"
         android:id="@+id/fragmentB"/>
 </LinearLayout>

@@ -1,4 +1,4 @@
-package com.isil.am2template;
+package com.isil.fragments;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
@@ -7,9 +7,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.isil.am2template.view.OnFragmentListener;
-import com.isil.am2template.view.fragments.AFragment;
-import com.isil.am2template.view.fragments.BFragment;
+import com.isil.fragments.view.OnFragmentListener;
+import com.isil.fragments.view.fragments.AFragment;
+import com.isil.fragments.view.fragments.BFragment;
 
 
 public class HomeActivity extends ActionBarActivity implements OnFragmentListener {

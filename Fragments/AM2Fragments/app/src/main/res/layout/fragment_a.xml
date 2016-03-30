@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ff00ff"
-    tools:context="com.isil.am2template.view.fragments.AFragment">
+    tools:context="com.isil.fragments.view.fragments.AFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView android:layout_width="wrap_content"
