@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="filters">
+        <item>All Items 20 </item>
+        <item>Downloaded Items 5 </item>
+        <item>Archived Items 15 </item>
+        <item>Periodicals 0 </item>
+    </string-array>
+</resources>
