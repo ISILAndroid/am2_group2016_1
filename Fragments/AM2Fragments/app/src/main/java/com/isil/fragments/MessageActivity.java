@@ -64,4 +64,10 @@ public class MessageActivity extends ActionBarActivity implements OnMessageListe
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void recibiryEnviardesdeFragment(String message) {
+        Log.v(TAG, "2 recibiryEnviarMensaje " + message);
+        twoFragment.mostrarMensaje(message);
+    }
 }

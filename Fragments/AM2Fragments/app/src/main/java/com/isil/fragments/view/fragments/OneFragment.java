@@ -107,7 +107,17 @@ public class OneFragment extends Fragment {
             public void onClick(View v) {
                 message= eteMessage.getText().toString();
                 Log.v(TAG, "1 message " + message);
-                ((MessageActivity)getActivity()).recibiryEnviarMensaje(message);
+                //((MessageActivity)getActivity()).recibiryEnviarMensaje(
+                        //message);
+
+                /*((OnMessageListener)getActivity()).
+                recibiryEnviardesdeFragment(
+                        message);*/
+
+                if(mListener!=null)
+                {
+                    mListener.recibiryEnviardesdeFragment(message);
+                }
             }
         });
 
