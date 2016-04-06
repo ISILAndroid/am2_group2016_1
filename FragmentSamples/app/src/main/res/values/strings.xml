@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">FragmentSmples</string>
+    <string name="hello_world">FragmentSamples</string>
+    <string name="action_settings">FragmentSamples</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">FragmentSamples</string>
+    <string name="title_activity_home">FragmentSamples</string>
+    <string name="title_activity_message">FragmentSamples</string>
+</resources>
