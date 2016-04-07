@@ -36,6 +36,7 @@ public class KindleActivity extends AppCompatActivity implements KindleListener 
     @Override
     public void filterSelected(int position, Object object) {
         Log.v(TAG, "2. filterSelected " + position + " obj " + object);
+        booksFragment.filtrar(position);
     }
 
     @Override

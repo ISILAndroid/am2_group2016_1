@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,7 @@ public class BooksFragment extends Fragment {
 
     private KindleListener mListener;
     private GridView gviewBooks;
+    private List<BookEntity> books;
 
     public BooksFragment() {
         // Required empty public constructor
@@ -99,8 +101,7 @@ public class BooksFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         gviewBooks= (GridView)getView().findViewById(R.id.gviewBooks);
-
-        List<BookEntity> books= new ArrayList<>();
+        books= new ArrayList<>();
         books.add(new BookEntity(1,"Matemática 1",1,true,false,1));
         books.add(new BookEntity(2, "Física Aplicada",2,false,true,0));
         books.add(new BookEntity(3, "Química Básica",2,false,false,2));
@@ -128,4 +129,52 @@ public class BooksFragment extends Fragment {
             mListener.gotoBookDetail(bookEntity);
         }
     }
+
+    public void filtrar(int position)
+    {
+        switch (position)
+        {
+            case 0:
+                    //allBooks();
+                break;
+            case 1:
+                    filterDownloaded();
+                break;
+            case 2:
+                    //filterArchived();
+                break;
+            case 3:
+                    //filterPeriodicals();
+                break;
+
+        }
+    }
+    //TODO 1. filtrar datos, mostrar datos
+    private void filterDownloaded()
+    {
+        List<BookEntity> booksDownloaded= new ArrayList<>();
+
+        /*for (int i = 0; i <; i++) {
+            BookEntity mbBookEntity= books.get(i);
+        }*/
+        for (BookEntity bookEntity:books) {
+            if(bookEntity.isDownloaded())
+            {
+                booksDownloaded.add(bookEntity);
+            }
+        }
+        Log.v("CONSOLE ", "total " + booksDownloaded.size());
+        populateFilter(booksDownloaded);
+    }
+    //TODO pintar datos
+    private void populateFilter(List<BookEntity> bookEntities)
+    {
+        BookAdapter bookAdapter= new BookAdapter(bookEntities,
+                getActivity());
+        gviewBooks.setAdapter(bookAdapter);
+    }
+
+
+
+
 }

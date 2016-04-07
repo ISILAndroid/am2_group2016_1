@@ -114,6 +114,7 @@ public class FilterFragment extends Fragment {
     private void filterSelected(int position, Object object) {
 
         Log.v(TAG, "1. filterSelected "+position+" obj "+object.toString());
-        if(mListener!=null)mListener.filterSelected(position,object);
+        if(mListener!=null)
+            mListener.filterSelected(position,object);
     }
 }
