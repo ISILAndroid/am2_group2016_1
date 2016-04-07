@@ -101,18 +101,10 @@ public class BooksFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         gviewBooks= (GridView)getView().findViewById(R.id.gviewBooks);
-        books= new ArrayList<>();
-        books.add(new BookEntity(1,"Matemática 1",1,true,false,1));
-        books.add(new BookEntity(2, "Física Aplicada",2,false,true,0));
-        books.add(new BookEntity(3, "Química Básica",2,false,false,2));
-        books.add(new BookEntity(4, "Física 1",2,true,false,3));
-        books.add(new BookEntity(5, "Física 2",2,true,false,2));
-        books.add(new BookEntity(6, "Algoritmos",3,false,false,5));
-        books.add(new BookEntity(7, "Computación",3,true,true,10));
 
-
-        final BookAdapter bookAdapter= new BookAdapter(books,getActivity());
-        gviewBooks.setAdapter(bookAdapter);
+        allBooks();
+        //final BookAdapter bookAdapter= new BookAdapter(books,getActivity());
+        //gviewBooks.setAdapter(bookAdapter);
 
         gviewBooks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -135,19 +127,44 @@ public class BooksFragment extends Fragment {
         switch (position)
         {
             case 0:
-                    //allBooks();
+                    allBooks();
                 break;
             case 1:
                     filterDownloaded();
                 break;
             case 2:
-                    //filterArchived();
+                    filterArchived();
                 break;
             case 3:
-                    //filterPeriodicals();
+                    filterPeriodicals();
                 break;
 
         }
+    }
+
+    private void filterPeriodicals() {
+
+        List<BookEntity> bookPeriodicals= new ArrayList<>();
+        for (BookEntity bookEntity:books) {
+            if(bookEntity.getPeriodicity()>2)
+            {
+                bookPeriodicals.add(bookEntity);
+            }
+        }
+        populateFilter(bookPeriodicals);
+    }
+
+    private void allBooks()
+    {
+        books= new ArrayList<>();
+        books.add(new BookEntity(1,"Matemática 1",1,true,false,1));
+        books.add(new BookEntity(2, "Física Aplicada",2,false,true,4));
+        books.add(new BookEntity(3, "Química Básica",2,false,false,2));
+        books.add(new BookEntity(4, "Física 1",2,true,false,3));
+        books.add(new BookEntity(5, "Física 2",2,true,false,2));
+        books.add(new BookEntity(6, "Algoritmos",3,false,false,5));
+        books.add(new BookEntity(7, "Computación",3,true,true,10));
+        populateFilter(books);
     }
     //TODO 1. filtrar datos, mostrar datos
     private void filterDownloaded()
@@ -165,6 +182,17 @@ public class BooksFragment extends Fragment {
         }
         Log.v("CONSOLE ", "total " + booksDownloaded.size());
         populateFilter(booksDownloaded);
+    }
+    private void filterArchived()
+    {
+        List<BookEntity> booksArchived= new ArrayList<>();
+        for (BookEntity bookEntity:books) {
+            if(bookEntity.isArchived())
+            {
+                booksArchived.add(bookEntity);
+            }
+        }
+        populateFilter(booksArchived);
     }
     //TODO pintar datos
     private void populateFilter(List<BookEntity> bookEntities)
