@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.isil.fragments.R;
 import com.isil.fragments.model.BookEntity;
@@ -50,6 +51,12 @@ public class BookAdapter extends BaseAdapter{
         }else
         {
             view =  convertView;
+        }
+        TextView tviName= (TextView)view.findViewById(R.id.tviName);
+        BookEntity bookEntity=books.get(position);
+        if(bookEntity!=null)
+        {
+            tviName.setText(bookEntity.getName());
         }
         return view;
     }

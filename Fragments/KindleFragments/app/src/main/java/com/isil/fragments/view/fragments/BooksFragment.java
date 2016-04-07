@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.isil.fragments.R;
@@ -100,14 +101,31 @@ public class BooksFragment extends Fragment {
         gviewBooks= (GridView)getView().findViewById(R.id.gviewBooks);
 
         List<BookEntity> books= new ArrayList<>();
-        books.add(new BookEntity());
-        books.add(new BookEntity());
-        books.add(new BookEntity());
-        books.add(new BookEntity());
-        books.add(new BookEntity());
-        books.add(new BookEntity());
-        books.add(new BookEntity());
-        BookAdapter bookAdapter= new BookAdapter(books,getActivity());
+        books.add(new BookEntity(1,"Matemática 1",1,true,false,1));
+        books.add(new BookEntity(2, "Física Aplicada",2,false,true,0));
+        books.add(new BookEntity(3, "Química Básica",2,false,false,2));
+        books.add(new BookEntity(4, "Física 1",2,true,false,3));
+        books.add(new BookEntity(5, "Física 2",2,true,false,2));
+        books.add(new BookEntity(6, "Algoritmos",3,false,false,5));
+        books.add(new BookEntity(7, "Computación",3,true,true,10));
+
+
+        final BookAdapter bookAdapter= new BookAdapter(books,getActivity());
         gviewBooks.setAdapter(bookAdapter);
+
+        gviewBooks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                BookEntity bookEntity= (BookEntity)adapterView.getAdapter().getItem(position);
+                selectedBook(bookEntity);
+            }
+        });
+    }
+
+    private void selectedBook(BookEntity bookEntity) {
+        if(mListener!=null)
+        {
+            mListener.gotoBookDetail(bookEntity);
+        }
     }
 }
