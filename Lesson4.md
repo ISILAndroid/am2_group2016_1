@@ -1,8 +1,6 @@
 ## Persistencia de Datos (S4-S6)
 
   - Preferencias de Usuario
-  - Base de datos Sqlite
-  - Ejemplos , CRUD
   
 ### Aplicación MyNotes
 
@@ -89,12 +87,62 @@ public class PreferencesHelper {
     }
 }
 
-    Status API Training Shop Blog About 
-
-    © 2016 GitHub, Inc. Terms Privacy Security Contact Help 
-
-
  ```
+Autenticación
+- LoginActivity.java
+
+![login](https://github.com/ISILAndroid/am2_group2016_1/blob/Lesson4/screenshots/Login.png)
+
+```
+    private void init() {
+        eteUsername=(EditText)findViewById(R.id.eteUsername);
+        etePassword=(EditText)findViewById(R.id.etePassword);
+        btnLogin=(Button)findViewById(R.id.btnLogin);
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (validateForm()) {
+                    gotoMain();
+                }
+            }
+        });
+    }
+
+    private void gotoMain() {
+
+        savePreferences();
+        Intent intent= new Intent(this,MainActivity.class);
+        startActivity(intent);
+    }
+
+    private void savePreferences() {
+
+        PreferencesHelper.saveSession(this,username,password);
+    }
+```
+Pantalla Principal:
+Obtener información de la sesión del usuario
+- MainActivity.java
+
+![main](https://github.com/ISILAndroid/am2_group2016_1/blob/Lesson4/screenshots/Listado%20de%20Notas.png)
+
+```
+  private void init() {
+        tviLogout= (TextView)findViewById(R.id.tviLogout);
+        tviUser= (TextView)findViewById(R.id.tviUser);
+        lstNotes= (ListView)(findViewById(R.id.lstNotes));
+        btnAddNote= (Button)(findViewById(R.id.btnAddNote));
+
+        //user Info
+        String username = PreferencesHelper.getUserSession(this);
+        if(username!=null)
+        {
+            tviUser.setText("Bienvenido "+ StringUtils.firstCapitalize(username));
+        }
+```
+
+
  
  
 
