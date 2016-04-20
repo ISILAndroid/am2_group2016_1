@@ -6,7 +6,7 @@
 
 ![splash](https://github.com/ISILAndroid/am2_group2016_1/blob/Lesson4/screenshots/Splash.png)
 
-Validación de sesión
+#### Validación de sesión
  - SplashActivity.java 
  
  ```
@@ -88,7 +88,7 @@ public class PreferencesHelper {
 }
 
  ```
-Autenticación
+#### Autenticación
 - LoginActivity.java
 
 ![login](https://github.com/ISILAndroid/am2_group2016_1/blob/Lesson4/screenshots/Login.png)
@@ -121,7 +121,7 @@ Autenticación
         PreferencesHelper.saveSession(this,username,password);
     }
 ```
-Pantalla Principal:
+#### Pantalla Principal:
 Obtener información de la sesión del usuario
 - MainActivity.java
 
