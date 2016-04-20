@@ -6,9 +6,9 @@ Curso de Aplicaciones Móviles II - Grupo 2016-I
 
 # Persistencia de Datos (S4-S6)
 
-- Preferencias de Usuario
+- Preferencias de Usuario [Link](https://github.com/ISILAndroid/am2_group2016_1/blob/Lesson4/Lesson4.md)
 - Base de datos Sqlite
-- Ejemplos , CRUD
+- Ejemplos , CRUD [Link](https://github.com/ISILAndroid/am2_group2016_1/blob/Lesson4/Lesson4-1.md)
 - ORM, uso de ORMLite
     
 Referencias:
