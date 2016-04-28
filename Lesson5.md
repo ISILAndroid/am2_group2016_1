@@ -7,7 +7,7 @@
 
 ![splash](https://github.com/ISILAndroid/am2_group2016_1/blob/Lesson4/screenshots/Splash.png)
 
-#### Validación de sesión
+#### Clases para manejar la bd de Datos local.
  - MyDatabase.java [com.isil.mynotes.storage.db.MyDatabase] 
  
  ```
@@ -58,7 +58,7 @@ public class MyDatabase extends SQLiteOpenHelper {
 
 }
  ```
- - CRUDOperations.java [com.isil.mynotes.storage.db.CRUDOperations] 
+- CRUDOperations.java [com.isil.mynotes.storage.db.CRUDOperations] 
  ```
 package com.isil.mynotes.storage.db;
 
@@ -176,8 +176,9 @@ public class CRUDOperations {
 
 
  ```
+ 
 #### Listar Notas
-MainActivity.java
+ MainActivity.java
 
 - Crear una instancia de CRUDOperations
 - Con el método "getAllNotes()", solicitar el listado de notas de la BD local.
@@ -193,6 +194,7 @@ MainActivity.java
 
     }
 ```
+
 #### Data precargada
  - Ejecutar solo la primera vez para cargar una data inicial, luego comentar el método y volver a compilar
 
