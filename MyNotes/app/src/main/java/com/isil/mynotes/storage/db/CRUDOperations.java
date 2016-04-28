@@ -74,7 +74,7 @@ public class CRUDOperations {
 		return lst;
 	}
 	
-	public int getContactsCount()
+	public int getNotesCount()
 	{
 		String sql= "SELECT * FROM "+MyDatabase.TABLE_NOTES;
 		SQLiteDatabase db = helper.getReadableDatabase();
