@@ -336,10 +336,11 @@ public class CRUDOperations {
     }
 ```
 - Método Agregar Nota
- Extraer los campos ingresados por el usuario
- Crear un entidad "NoteEntity" con la información ingresada
- Llamar al crudoperation de la actividad principal e invocar el método "addNote()" donde enviamos la entidad.
- Cerrar la vista actual
+
+ 	- Extraer los campos ingresados por el usuario
+ 	- Crear un entidad "NoteEntity" con la información ingresada
+ 	- Llamar al crudoperation de la actividad principal e invocar el método "addNote()" donde enviamos la entidad.
+ 	- Cerrar la vista actual
 ```
   private void addNote() {
         name= eteName.getText().toString().trim();
