@@ -30,6 +30,7 @@ public class NoteActivity extends ActionBarActivity  implements OnNoteListener, 
     private NoteEntity noteEntity;
 
     private CRUDOperations crudOperations;
+    private NoteEntity tmpNoteEntity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,10 +100,12 @@ public class NoteActivity extends ActionBarActivity  implements OnNoteListener, 
 
     @Override
     public void deleteNote(NoteEntity noteEntity) {
+        tmpNoteEntity= noteEntity;
         MyDialogFragment myDialogFragment =new MyDialogFragment();
         Bundle bundle= new Bundle();
         bundle.putString("TITLE","¿Deseas eliminar esta nota?");
-        bundle.putInt("TYPE",100);
+        bundle.putInt("TYPE", 100);
+        bundle.putSerializable("NOTEENTITY",noteEntity);
         myDialogFragment.setArguments(bundle);
         myDialogFragment.show(getFragmentManager(), "dialog");
     }
@@ -110,6 +113,16 @@ public class NoteActivity extends ActionBarActivity  implements OnNoteListener, 
     @Override
     public void onPositiveListener(Object object, int type) {
         Log.v(TAG, "dialog positive");
+        //NoteEntity auxNoteEntity= (NoteEntity)object;
+        if(tmpNoteEntity!=null)
+        {
+            //eliminar
+            crudOperations.deleteNote(tmpNoteEntity);
+            tmpNoteEntity=null;
+            //cerrar vista
+            finish();
+        }
+
     }
 
     @Override
