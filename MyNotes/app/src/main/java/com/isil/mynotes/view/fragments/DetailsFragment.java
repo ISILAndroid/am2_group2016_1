@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.isil.mynotes.R;
 import com.isil.mynotes.model.entity.NoteEntity;
@@ -20,6 +21,8 @@ public class DetailsFragment extends Fragment {
 
     private Button btnDeleteNote;
     private Button btnEditNote;
+    private EditText eteName;
+    private EditText eteDesc;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -82,6 +85,9 @@ public class DetailsFragment extends Fragment {
         btnDeleteNote=(Button)getView().findViewById(R.id.btnDeleteNote);
         btnEditNote=(Button)getView().findViewById(R.id.btnEditNote);
 
+        eteName= (EditText)getView().findViewById(R.id.eteName);
+        eteDesc= (EditText)getView().findViewById(R.id.eteDesc);
+
         if(getArguments()!=null)
         {
             noteEntity= (NoteEntity)getArguments().getSerializable("NOTE");
@@ -89,6 +95,11 @@ public class DetailsFragment extends Fragment {
         if(noteEntity!=null)
         {
             //TODO mostrar INFO
+            String name= noteEntity.getName();
+            String desc= noteEntity.getDescription();
+
+            eteName.setText(name);
+            eteDesc.setText(desc);
         }
 
         btnDeleteNote.setOnClickListener(new View.OnClickListener() {
@@ -97,5 +108,29 @@ public class DetailsFragment extends Fragment {
                 mListener.deleteNote(noteEntity);
             }
         });
+
+        btnEditNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editNote();
+            }
+        });
+    }
+    private void editNote()
+    {
+        //TODO validar campos
+        //extraer lo valores
+        String name= eteName.getText().toString().trim();
+        String desc= eteDesc.getText().toString().trim();
+        NoteEntity nNoteEntity=new NoteEntity();
+        nNoteEntity.setName(name);
+        nNoteEntity.setDescription(desc);
+        nNoteEntity.setId(noteEntity.getId());
+
+        //llamar el método de crudoperation
+        mListener.getCrudOperations().updateNote(nNoteEntity);
+
+        //cerrar la pantalla
+        getActivity().finish();
     }
 }
