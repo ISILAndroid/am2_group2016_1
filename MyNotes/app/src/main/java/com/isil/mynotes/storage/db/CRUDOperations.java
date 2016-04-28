@@ -56,19 +56,19 @@ public class CRUDOperations {
 	{
 		List<NoteEntity> lst =new ArrayList<NoteEntity>();
 		String sql= "SELECT  * FROM " + MyDatabase.TABLE_NOTES;
-		SQLiteDatabase db = helper.getWritableDatabase();
+		SQLiteDatabase db = helper.getReadableDatabase();
 		Cursor cursor = db.rawQuery(sql, null);
 		if(cursor.moveToFirst())
 		{
 			do
 			{
-				NoteEntity contact =new NoteEntity();
-				contact.setId(Integer.parseInt(cursor.getString(0)));
-				contact.setName(cursor.getString(1));
-				contact.setDescription(cursor.getString(2));
-				contact.setPath(cursor.getString(3));
+				NoteEntity noteEntity =new NoteEntity();
+				noteEntity.setId(Integer.parseInt(cursor.getString(0)));
+				noteEntity.setName(cursor.getString(1));
+				noteEntity.setDescription(cursor.getString(2));
+				noteEntity.setPath(cursor.getString(3));
 
-				lst.add(contact);
+				lst.add(noteEntity);
 			}while(cursor.moveToNext());
 		}
 		return lst;
