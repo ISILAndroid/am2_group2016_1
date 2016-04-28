@@ -266,6 +266,7 @@ public class CRUDOperations {
 	}
   ```
  6. Borrar una nota
+ 
   ```
 	public int deleteNote(NoteEntity noteEntity)
 	{
@@ -311,6 +312,45 @@ public class CRUDOperations {
         crudOperations.addNote(new NoteEntity("Sexta Nota","Esta es la sexta nota ",null));
 
         Log.v(TAG, "populate " + crudOperations.getAllNotes());
+    }
+```
+
+### Agregar una nota : Base de Datos integrado con las Vistas
+ AddNoteFragment.java [com.isil.mynotes.view.fragments.AddNoteFragment]
+ - Instanciar los elementos de la UI
+```
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        eteName=(EditText)getView().findViewById(R.id.eteName);
+        eteDesc=(EditText)getView().findViewById(R.id.eteDesc);
+        eteNote=(EditText)getView().findViewById(R.id.eteNote);
+        btnAddNote=(Button)getView().findViewById(R.id.btnAddNote);
+
+        btnAddNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addNote();
+            }
+        });
+    }
+```
+- Método Agregar Nota
+ Extraer los campos ingresados por el usuario
+ Crear un entidad "NoteEntity" con la información ingresada
+ Llamar al crudoperation de la actividad principal e invocar el método "addNote()" donde enviamos la entidad.
+ Cerrar la vista actual
+```
+  private void addNote() {
+        name= eteName.getText().toString().trim();
+        desc= eteDesc.getText().toString().trim();
+        note= eteNote.getText().toString().trim();
+
+        NoteEntity noteEntity= new NoteEntity(name,desc,null);
+        mListener.getCrudOperations().addNote(noteEntity);
+
+        getActivity().finish();
+
     }
 ```
 
