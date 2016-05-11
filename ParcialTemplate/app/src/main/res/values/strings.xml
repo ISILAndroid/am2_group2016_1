@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Parcial TMP</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="username">Username</string>
+    <string name="passsword">Password</string>
+    <string name="ingresar">Ingresar</string>
+
+    <string name="perfil">Perfil</string>
+    <string name="notas">Notas</string>
+    <string name="facultades">Facultades</string>
+    <string name="logout">Cerrar Sesión</string>
+</resources>
