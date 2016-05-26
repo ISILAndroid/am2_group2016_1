@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.isil.am2.template.R;
+import com.isil.am2.template.model.FacultyEntity;
+import com.isil.am2.template.storage.CRUDOperations;
+import com.isil.am2.template.storage.MyDatabase;
 import com.isil.am2.template.storage.PreferencesHelper;
 import com.isil.am2.template.ui.fragments.FacultiesFragment;
 import com.isil.am2.template.ui.fragments.NotesFragment;
@@ -22,8 +25,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         app();
+
+        //Ejecutar un sola vez
+        //populate();
+    }
+
+    private void populate() {
+        CRUDOperations crudOperations= new CRUDOperations(new MyDatabase(this));
+        crudOperations.addFaculty(new FacultyEntity("Odontología DB",0));
+        crudOperations.addFaculty(new FacultyEntity("Medicina Humana DB", 0));
+        crudOperations.addFaculty(new FacultyEntity("Derecho DB", 0));
+        crudOperations.addFaculty(new FacultyEntity("Ingeniería y Arquitectura DB", 0));
+        crudOperations.addFaculty(new FacultyEntity("Estadísticas DB", 0));
+        crudOperations.addFaculty(new FacultyEntity("Ingeniería Química DB", 0));
     }
 
     private void app() {

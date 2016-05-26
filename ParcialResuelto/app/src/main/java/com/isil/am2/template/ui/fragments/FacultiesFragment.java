@@ -12,6 +12,8 @@ import android.widget.ListView;
 
 import com.isil.am2.template.R;
 import com.isil.am2.template.model.FacultyEntity;
+import com.isil.am2.template.storage.CRUDOperations;
+import com.isil.am2.template.storage.MyDatabase;
 import com.isil.am2.template.ui.OnMainListener;
 import com.isil.am2.template.ui.adapter.FacultyAdapter;
 
@@ -38,6 +40,7 @@ public class FacultiesFragment extends Fragment {
     private OnMainListener mListener;
     private ListView lviFaculty;
     List<FacultyEntity> faculties;
+    private CRUDOperations crudOperations;
 
     public FacultiesFragment() {
         // Required empty public constructor
@@ -99,14 +102,21 @@ public class FacultiesFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         lviFaculty= (ListView)getView().findViewById(R.id.lviFaculty);
-
-        mock();
+        //Cargar data de prueba
+        //loadMock();
+        //Carga data de BD
+        loadDB();
 
         FacultyAdapter adapter= new FacultyAdapter(getActivity(),R.layout.row_faculty,faculties);
         lviFaculty.setAdapter(adapter);
     }
 
-    private void mock() {
+    private void loadDB() {
+        crudOperations= new CRUDOperations(new MyDatabase(getActivity()));
+        faculties=crudOperations.getAllFaculties();
+    }
+
+    private void loadMock() {
 
         faculties= new ArrayList<>();
         faculties.add(new FacultyEntity("Odontología",0));
