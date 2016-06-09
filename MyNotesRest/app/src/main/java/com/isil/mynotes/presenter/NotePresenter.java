@@ -37,6 +37,7 @@ public class NotePresenter {
         noteRaw.setName(name);
         noteRaw.setDescription(desc);
 
+        addNoteView.showLoading();
         ApiClient.getMyApiClient().addNote(noteRaw, new Callback<NoteResponse>() {
             @Override
             public void success(NoteResponse noteResponse, Response response) {
