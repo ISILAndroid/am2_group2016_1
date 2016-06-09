@@ -35,7 +35,44 @@ En este sesión veremos como conectar nuestra aplicación Android con un Base de
   "password" : value,
  }
 ```
-4. Listar notas
+- Vamos a necesitar 3 entidades para poder trabajar el usuario, el logIn y la respuesta del servidor 
+    UserEntity
+```
+public class UserEntity implements Serializable {
+    private String email;
+    private String name;
+    private String objectId;
+    private String token;
+}
+```
+    LogInRaw ( Esta entidad es lo que se va enviar al servidor con el email y password)
+```
+public class LogInRaw {
+    private String login;
+    private String password;
+}
+
+```
+    LogInResponse ( Esto es para la respuesta del servidor al hacer LogIn)
+```
+public class LogInResponse {
+
+    private String message;
+
+    private String name;
+
+    @SerializedName("___class")
+    private String type;
+
+    @SerializedName("user-token")
+    private String token;
+
+    private String email;
+
+    private String objectId;
+}
+```
+4 . Listar notas
  - Revisamos la documentación en la sección Data : https://backendless.com/documentation/data/rest/data_retrieving_properties_of_the_d.htm
  ```
  method : GET
