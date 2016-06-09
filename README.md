@@ -76,6 +76,80 @@ public class LogInResponse {
     private String objectId;
 }
 ```
+Creamos una clase llamada ApiClient donde vamos a declarar todas las llamadas al servidor
+
+ ```
+ public class ApiClient {
+
+    private static final String TAG = "ApiClient";
+    private static final String PATH="http://api.backendless.com";
+
+    private static ServicesApiInterface servicesApiInterface;
+
+    public static ServicesApiInterface getMyApiClient() {
+
+        if (servicesApiInterface == null) {
+
+            RestAdapter restAdapter = new RestAdapter.Builder()
+                    .setEndpoint(PATH)
+                    .setClient(new OkClient(getClient()))
+                    .setLogLevel(RestAdapter.LogLevel.FULL)
+                    .build();
+
+            servicesApiInterface = restAdapter.create(ServicesApiInterface.class);
+        }
+        return servicesApiInterface;
+    }
+
+    public interface ServicesApiInterface {
+
+        ///<version name>/users/login
+        //@Headers({"Content-Type: application/json"})
+
+
+        @Headers({
+                "Content-Type: application/json",
+                "application-id: B9D12B47-6B88-8471-FFAD-2B4FFD1EA100",
+                "secret-key: 46C1AEC7-6BA7-D1C7-FF6A-FD9EA95C0C00",
+                "application-type: REST"
+        })
+        //v1/users/login
+        @POST("/v1/users/login")
+        void login(@Body LogInRaw raw, Callback<LogInResponse> callback);
+
+
+        @Headers({
+                "Content-Type: application/json",
+                "application-id: B9D12B47-6B88-8471-FFAD-2B4FFD1EA100",
+                "secret-key: 46C1AEC7-6BA7-D1C7-FF6A-FD9EA95C0C00",
+                "application-type: REST"
+        })
+        //v1/data/Notes
+        @GET("/v1/data/Notes")
+        void notes( Callback<NotesResponse> callback);
+
+
+        @Headers({
+                "Content-Type: application/json",
+                "application-id: B9D12B47-6B88-8471-FFAD-2B4FFD1EA100",
+                "secret-key: 46C1AEC7-6BA7-D1C7-FF6A-FD9EA95C0C00",
+                "application-type: REST"
+        })
+        @POST("/v1/data/Notes")
+        void addNote(@Body NoteRaw raw, Callback<NoteResponse> callback);
+
+
+
+    }
+
+    private static OkHttpClient getClient() {
+        OkHttpClient client = new OkHttpClient();
+        client.setConnectTimeout(2, TimeUnit.MINUTES);
+        client.setReadTimeout(2, TimeUnit.MINUTES);
+        return client;
+    }
+}
+ ```
 
 4 . Listar notas
  - Revisamos la documentación en la sección Data : https://backendless.com/documentation/data/rest/data_retrieving_properties_of_the_d.htm
