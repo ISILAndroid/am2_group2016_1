@@ -351,7 +351,7 @@ public class NotesPresenter {
     }
 }
 ```
-
+4.4 La actividad donde se pintan las notas quedará de la siguiente manera :
 ```
 public class MainActivity extends ActionBarActivity implements NotesView {
 
