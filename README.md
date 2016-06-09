@@ -46,7 +46,8 @@ public class UserEntity implements Serializable {
 }
 ```
 
-    LogInRaw ( Esta entidad es lo que se va enviar al servidor con el email y password)
+LogInRaw ( Esta entidad es lo que se va enviar al servidor con el email y password)
+
 ```
 public class LogInRaw {
     private String login;
@@ -54,7 +55,9 @@ public class LogInRaw {
 }
 
 ```
-    LogInResponse ( Esto es para la respuesta del servidor al hacer LogIn)
+
+LogInResponse ( Esto es para la respuesta del servidor al hacer LogIn)
+
 ```
 public class LogInResponse {
 
