@@ -18,7 +18,6 @@ En este sesión veremos como conectar nuestra aplicación Android con un Base de
   "password" : value,
  }
 ```
-
 4. Listar notas
  - Revisamos la documentación en la sección Data : https://backendless.com/documentation/data/rest/data_retrieving_properties_of_the_d.htm
  ```
@@ -82,7 +81,6 @@ En este sesión veremos como conectar nuestra aplicación Android con un Base de
  }
 ]
 ```
-
 5. Referencias
 Librerías que vamos a usar, Retrofit, OkHttp y GSON
 
