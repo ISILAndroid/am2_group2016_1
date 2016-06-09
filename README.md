@@ -10,6 +10,7 @@ En este sesión veremos como conectar nuestra aplicación Android con un Base de
  - Revisamos la documentación de la API Rest https://backendless.com/products/documentation/
  - LogIn: https://backendless.com/documentation/users/rest/users_login.htm
 ```
+ method : POST
  url : /<version name>/users/login
  raw : 
  {
@@ -20,6 +21,67 @@ En este sesión veremos como conectar nuestra aplicación Android con un Base de
 
 4. Listar notas
  - Revisamos la documentación en la sección Data : https://backendless.com/documentation/data/rest/data_retrieving_properties_of_the_d.htm
+ ```
+ method : GET
+ url : https://api.backendless.com/<version>/data/<table-name>/properties
+ response: 
+ [
+ {
+  "name": "updated",
+  "required": false,
+  "type": "DATETIME",
+  "defaultValue": null,
+  "relatedTable": null,
+  "customRegex": null,
+  "autoLoad": false
+ },
+ {
+  "name": "created",
+  "required": false,
+  "type": "DATETIME",
+  "defaultValue": null,
+  "relatedTable": null,
+  "customRegex": null,
+  "autoLoad": false
+ },
+ {
+  "name": "objectId",
+  "required": false,
+  "type": "STRING_ID",
+  "defaultValue": null,
+  "relatedTable": null,
+  "customRegex": null,
+  "autoLoad": false
+ },
+ {
+  "name": "ownerId",
+  "required": false,
+  "type": "STRING",
+  "defaultValue": null,
+  "relatedTable": null,
+  "customRegex": null,
+  "autoLoad": false
+ },
+ {
+  "name": "name",
+  "required": false,
+  "type": "STRING",
+  "defaultValue": null,
+  "relatedTable": null,
+  "customRegex": null,
+  "autoLoad": false
+ },
+ {
+  "name": "age",
+  "required": false,
+  "type": "INT",
+  "defaultValue": null,
+  "relatedTable": null,
+  "customRegex": null,
+  "autoLoad": false
+ }
+]
+```
 
 5. Referencias
 Librerías que vamos a usar, Retrofit, OkHttp y GSON
