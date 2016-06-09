@@ -45,6 +45,7 @@ public class UserEntity implements Serializable {
     private String token;
 }
 ```
+
     LogInRaw ( Esta entidad es lo que se va enviar al servidor con el email y password)
 ```
 public class LogInRaw {
@@ -72,6 +73,7 @@ public class LogInResponse {
     private String objectId;
 }
 ```
+
 4 . Listar notas
  - Revisamos la documentación en la sección Data : https://backendless.com/documentation/data/rest/data_retrieving_properties_of_the_d.htm
  ```
