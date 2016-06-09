@@ -24,8 +24,8 @@ En este sesión veremos como conectar nuestra aplicación Android con un Base de
     compile 'com.squareup.okhttp:okhttp:2.5.0'
 ```
 3 . LogIn 
- - Revisamos la documentación de la API Rest https://backendless.com/products/documentation/
- - LogIn: https://backendless.com/documentation/users/rest/users_login.htm
+ 3.1 Revisamos la documentación de la API Rest https://backendless.com/products/documentation/
+ 3.2 LogIn: https://backendless.com/documentation/users/rest/users_login.htm
 ```
  method : POST
  url : /<version name>/users/login
@@ -35,7 +35,7 @@ En este sesión veremos como conectar nuestra aplicación Android con un Base de
   "password" : value,
  }
 ```
-- Vamos a necesitar 3 entidades para poder trabajar el usuario, el logIn y la respuesta del servidor 
+3.3 Vamos a necesitar 3 entidades para poder trabajar el usuario, el logIn y la respuesta del servidor 
     UserEntity
 ```
 public class UserEntity implements Serializable {
@@ -46,7 +46,7 @@ public class UserEntity implements Serializable {
 }
 ```
 
-LogInRaw ( Esta entidad es lo que se va enviar al servidor con el email y password)
+3.4 LogInRaw ( Esta entidad es lo que se va enviar al servidor con el email y password)
 
 ```
 public class LogInRaw {
@@ -56,7 +56,7 @@ public class LogInRaw {
 
 ```
 
-LogInResponse ( Esto es para la respuesta del servidor al hacer LogIn)
+3.5 LogInResponse ( Esto es para la respuesta del servidor al hacer LogIn)
 
 ```
 public class LogInResponse {
@@ -76,7 +76,7 @@ public class LogInResponse {
     private String objectId;
 }
 ```
-Creamos una clase llamada ApiClient donde vamos a declarar todas las llamadas al servidor
+3.6 Creamos una clase llamada ApiClient donde vamos a declarar todas las llamadas al servidor. Recordar que deben usar las credenciales de la BD que crearon en BackendLess "Identificador de Aplicación" y "Clave secreta REST"
 
  ```
  public class ApiClient {
@@ -109,8 +109,8 @@ Creamos una clase llamada ApiClient donde vamos a declarar todas las llamadas al
 
         @Headers({
                 "Content-Type: application/json",
-                "application-id: B9D12B47-6B88-8471-FFAD-2B4FFD1EA100",
-                "secret-key: 46C1AEC7-6BA7-D1C7-FF6A-FD9EA95C0C00",
+                "application-id: xxxxxxx",
+                "secret-key: xxxxxx",
                 "application-type: REST"
         })
         //v1/users/login
@@ -120,8 +120,8 @@ Creamos una clase llamada ApiClient donde vamos a declarar todas las llamadas al
 
         @Headers({
                 "Content-Type: application/json",
-                "application-id: B9D12B47-6B88-8471-FFAD-2B4FFD1EA100",
-                "secret-key: 46C1AEC7-6BA7-D1C7-FF6A-FD9EA95C0C00",
+                "application-id: xxxxxx",
+                "secret-key: xxxxx",
                 "application-type: REST"
         })
         //v1/data/Notes
@@ -131,15 +131,12 @@ Creamos una clase llamada ApiClient donde vamos a declarar todas las llamadas al
 
         @Headers({
                 "Content-Type: application/json",
-                "application-id: B9D12B47-6B88-8471-FFAD-2B4FFD1EA100",
-                "secret-key: 46C1AEC7-6BA7-D1C7-FF6A-FD9EA95C0C00",
+                "application-id: xxxxx",
+                "secret-key: xxxxxx",
                 "application-type: REST"
         })
         @POST("/v1/data/Notes")
         void addNote(@Body NoteRaw raw, Callback<NoteResponse> callback);
-
-
-
     }
 
     private static OkHttpClient getClient() {
@@ -150,7 +147,84 @@ Creamos una clase llamada ApiClient donde vamos a declarar todas las llamadas al
     }
 }
  ```
+3. 7 Vamos a considerar la actividad del LogIn como un vista sin lógica, solo como métodos para ser llamado por otra clase que se encargue de administrar estas acciones. Esta clase la vamos a llamar LogInPresenter y nuestra activity va implementar una insterfaz llamada LogInView 
+ ```
+ public interface LogInView {
 
+    void showLoading();
+    void hideLoading();
+    Context getContext();
+
+    void onMessageError(String message);
+    void gotoMain();
+}
+
+ ```
+ 
+ ```
+ public class LogInPresenter {
+
+    private static final String TAG = "LogInPresenter";
+    private LogInView logInView;
+    private String email;
+    private String password;
+
+    public   void attachedView(LogInView logInView){
+        this.logInView = logInView;
+    }
+
+    public  void detachView(){
+        this.logInView=null;
+    }
+
+    public void logIn(String email,String password) {
+        this.email = email;
+        this.password = password;
+        LogInRaw logInRaw= new LogInRaw();
+        logInRaw.setLogin(this.email);
+        logInRaw.setPassword(this.password);
+
+        logInView.showLoading();
+
+        ApiClient.getMyApiClient().login(logInRaw, new Callback<LogInResponse>() {
+            @Override
+            public void success(LogInResponse loginResponse, Response response) {
+                loginSuccess(loginResponse,response);
+            }
+
+            @Override
+            public void failure(RetrofitError error)
+            {
+                String json="Error ";
+                try {
+                    json= new String(((TypedByteArray)error.getResponse().getBody()).getBytes());
+                }catch (NullPointerException e) {}
+                Log.v(TAG, "json >>>> " + json);
+
+                loginError(json);
+
+            }
+        });
+
+    }
+    public void loginSuccess(LogInResponse loginResponse, Response response){
+        if(loginResponse.isSuccess()){
+            UserEntity userEntity= new UserEntity();
+            userEntity.setEmail(loginResponse.getEmail());
+            userEntity.setName(loginResponse.getName());
+            userEntity.setObjectId(loginResponse.getObjectId());
+            userEntity.setToken(loginResponse.getToken());
+        }
+        logInView.hideLoading();
+        logInView.gotoMain();
+    }
+
+    public void loginError(String messageError){
+        logInView.hideLoading();
+        logInView.onMessageError(messageError);
+    }
+}
+ ```
 4 . Listar notas
  - Revisamos la documentación en la sección Data : https://backendless.com/documentation/data/rest/data_retrieving_properties_of_the_d.htm
  ```
