@@ -147,7 +147,7 @@ public class LogInResponse {
     }
 }
  ```
-3. 7 Vamos a considerar la actividad del LogIn como un vista sin lógica, solo como métodos para ser llamado por otra clase que se encargue de administrar estas acciones. Esta clase la vamos a llamar LogInPresenter y nuestra activity va implementar una insterfaz llamada LogInView 
+3.7  Vamos a considerar la actividad del LogIn como un vista sin lógica, solo como métodos para ser llamado por otra clase que se encargue de administrar estas acciones. Esta clase la vamos a llamar LogInPresenter y nuestra activity va implementar una insterfaz llamada LogInView 
  ```
  public interface LogInView {
 
