@@ -2,6 +2,7 @@ package com.isil.mynotes;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -22,7 +23,7 @@ public class LoginActivity extends ActionBarActivity implements LogInView {
     private EditText etePassword;
     private String username;
     private String password;
-    private View rlayLoading;
+    private View rlayLoading,container;
 
     private LogInPresenter logInPresenter;
 
@@ -42,6 +43,7 @@ public class LoginActivity extends ActionBarActivity implements LogInView {
         etePassword=(EditText)findViewById(R.id.etePassword);
         btnLogin=(Button)findViewById(R.id.btnLogin);
         rlayLoading=findViewById(R.id.rlayLoading);
+        container=findViewById(R.id.container);
 
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -101,6 +103,9 @@ public class LoginActivity extends ActionBarActivity implements LogInView {
 
     @Override
     public void onMessageError(String message) {
+        Snackbar snackbar = Snackbar
+                .make(container,message, Snackbar.LENGTH_LONG);
 
+        snackbar.show();
     }
 }

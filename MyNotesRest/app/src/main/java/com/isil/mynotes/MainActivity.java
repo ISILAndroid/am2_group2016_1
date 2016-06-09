@@ -2,6 +2,7 @@ package com.isil.mynotes;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,7 +35,7 @@ public class MainActivity extends ActionBarActivity implements NotesView {
     private TextView tviLogout,tviUser;
     private ListView lstNotes;
     private Button btnAddNote;
-    private View rlayLoading;
+    private View rlayLoading,container;
     private List<NoteEntity> lsNoteEntities;
     private CRUDOperations crudOperations;
     private NoteAdapter noteAdapter;
@@ -176,7 +177,10 @@ public class MainActivity extends ActionBarActivity implements NotesView {
 
     @Override
     public void onMessageError(String message) {
+        Snackbar snackbar = Snackbar
+                .make(container,message, Snackbar.LENGTH_LONG);
 
+        snackbar.show();
     }
 
     @Override
