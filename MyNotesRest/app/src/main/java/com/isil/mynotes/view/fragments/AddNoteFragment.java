@@ -127,17 +127,17 @@ public class AddNoteFragment extends Fragment  implements AddNoteView{
 
     @Override
     public void showLoading() {
-
+        mListener.showParentLoading();
     }
 
     @Override
     public void hideLoading() {
-
+        mListener.hideParentLoading();
     }
 
     @Override
     public void onMessageError(String message) {
-
+        mListener.showMessage(message);
     }
 
     @Override

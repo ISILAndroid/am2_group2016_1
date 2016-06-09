@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.isil.mynotes.R;
 import com.isil.mynotes.model.entity.NoteEntity;
@@ -32,12 +33,15 @@ public class NoteActivity extends ActionBarActivity  implements OnNoteListener, 
     private CRUDOperations crudOperations;
     private NoteEntity tmpNoteEntity;
 
+    private View rlayLoading;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
         validateExtras();
 
+        rlayLoading= findViewById(R.id.rlayLoading);
         crudOperations= new CRUDOperations(new MyDatabase(this));
         Bundle bundle= new Bundle();
         bundle.putSerializable("NOTE",noteEntity);
@@ -108,6 +112,21 @@ public class NoteActivity extends ActionBarActivity  implements OnNoteListener, 
         bundle.putSerializable("NOTEENTITY",noteEntity);
         myDialogFragment.setArguments(bundle);
         myDialogFragment.show(getFragmentManager(), "dialog");
+    }
+
+    @Override
+    public void showParentLoading() {
+        this.rlayLoading.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideParentLoading() {
+        this.rlayLoading.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showMessage(String message) {
+
     }
 
     @Override

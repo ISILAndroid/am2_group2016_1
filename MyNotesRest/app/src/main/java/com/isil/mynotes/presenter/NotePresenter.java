@@ -51,7 +51,7 @@ public class NotePresenter {
     }
     public void addNoteSuccess(NoteResponse noteResponse, Response response){
 
-        if(noteResponse.isSuccess()){
+        if(noteResponse!=null){
             NoteEntity noteEntity= new NoteEntity();
             noteEntity.setObjectId(noteResponse.getObjectId());
             noteEntity.setName(noteResponse.getName());

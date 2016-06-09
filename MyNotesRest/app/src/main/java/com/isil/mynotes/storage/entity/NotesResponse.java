@@ -28,8 +28,6 @@ import java.util.List;
  */
 public class NotesResponse {
 
-    private static final int SUCCESS=0;
-    private int code;
     private String message;
 
     private int offset;
@@ -38,21 +36,6 @@ public class NotesResponse {
     private Object nextPage;
     private int totalObjects;
 
-
-
-    public boolean isSuccess()
-    {
-        if(this.code==SUCCESS)return true;
-        return false;
-    }
-
-    public int getCode() {
-        return this.code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
 
     public String getMessage() {
         return this.message;

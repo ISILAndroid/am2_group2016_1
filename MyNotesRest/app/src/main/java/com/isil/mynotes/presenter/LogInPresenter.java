@@ -61,7 +61,7 @@ public class LogInPresenter {
 
     }
     public void loginSuccess(LogInResponse loginResponse, Response response){
-        if(loginResponse.isSuccess()){
+        if(loginResponse!=null){
             UserEntity userEntity= new UserEntity();
             userEntity.setEmail(loginResponse.getEmail());
             userEntity.setName(loginResponse.getName());

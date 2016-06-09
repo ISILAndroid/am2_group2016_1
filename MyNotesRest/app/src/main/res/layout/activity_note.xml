@@ -12,5 +12,5 @@
         android:id="@+id/container">
 
     </FrameLayout>
-
+    <include layout="@layout/layout_loading"/>
 </RelativeLayout>

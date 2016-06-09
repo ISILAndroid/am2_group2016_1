@@ -7,8 +7,6 @@ import com.google.gson.annotations.SerializedName;
  */
 public class LogInResponse {
 
-    private static final int SUCCESS=0;
-    private int code;
     private String message;
 
     private String name;
@@ -22,22 +20,6 @@ public class LogInResponse {
     private String email;
 
     private String objectId;
-
-
-
-    public boolean isSuccess()
-    {
-        if(this.code==SUCCESS)return true;
-        return false;
-    }
-
-    public int getCode() {
-        return this.code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
 
     public String getMessage() {
         return this.message;

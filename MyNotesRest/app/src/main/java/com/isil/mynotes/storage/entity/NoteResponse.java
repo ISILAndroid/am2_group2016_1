@@ -16,27 +16,11 @@ package com.isil.mynotes.storage.entity;
  */
 public class NoteResponse {
 
-    private static final int SUCCESS=0;
-    private int code;
 
     private String name;
     private String description;
     private String objectId;
 
-
-    public boolean isSuccess()
-    {
-        if(this.code==SUCCESS)return true;
-        return false;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
 
     public String getName() {
         return name;

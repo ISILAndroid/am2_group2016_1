@@ -45,7 +45,7 @@ public class NotesPresenter {
     private void notesSuccess(NotesResponse notesResponse, Response response) {
         notesView.hideLoading();
 
-        if(notesResponse.isSuccess()){
+        if(notesResponse!=null){
             List<NoteEntity> notes= notesResponse.getData();
             notesView.renderNotes(notes);
         }

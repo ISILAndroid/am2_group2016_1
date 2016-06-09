@@ -50,7 +50,7 @@ public class MainActivity extends ActionBarActivity implements NotesView {
         notesPresenter.attachedView(this);
         init();
         //loadData();
-        loadCloud();
+        //loadCloud();
     }
 
     private void loadCloud() {
@@ -144,7 +144,8 @@ public class MainActivity extends ActionBarActivity implements NotesView {
     protected void onResume() {
         super.onResume();
         Log.v(TAG, "onResumen");
-        loadData();
+        //loadData();
+        loadCloud();
     }
 
     @Override

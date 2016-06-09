@@ -10,4 +10,7 @@ public interface OnNoteListener {
 
      CRUDOperations getCrudOperations();
      void deleteNote(NoteEntity noteEntity);
+     void showParentLoading();
+     void hideParentLoading();
+     void showMessage(String message);
 }
