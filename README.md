@@ -225,8 +225,10 @@ public class LogInResponse {
     }
 }
  ```
+ 3.8 De la conexión recibimos 2 tipos de respuesta: un SUCCESS y FAILURE, en donde informamos a la vista si la autenticación fue exitosa o si ocurrio algún error.
+ 
 4 . Listar notas
- - Revisamos la documentación en la sección Data : https://backendless.com/documentation/data/rest/data_retrieving_properties_of_the_d.htm
+ 4.1  Revisamos la documentación en la sección Data : https://backendless.com/documentation/data/rest/data_retrieving_properties_of_the_d.htm
  ```
  method : GET
  url : https://api.backendless.com/<version>/data/<table-name>/properties
@@ -288,6 +290,67 @@ public class LogInResponse {
  }
 ]
 ```
+4.2 Creamos una interfaz para declarar los métodos de la vista donde pintaremos las notas que están en backendless
+```
+public interface NotesView {
+
+    void showLoading();
+    void hideLoading();
+    Context getContext();
+
+    void onMessageError(String message);
+    void renderNotes(List<NoteEntity> notes);
+
+}
+```
+4.3 Creamos un presenter donde esta la lógica de conexión usando una petición GET
+
+```
+public class NotesPresenter {
+
+    private static final String TAG = "NotesPresenter";
+    private NotesView notesView;
+
+    public   void attachedView(NotesView notesView){
+        this.notesView = notesView;
+    }
+
+    public  void detachView(){
+        this.notesView=null;
+    }
+
+    public void loadNotes(){
+        notesView.showLoading();
+
+        ApiClient.getMyApiClient().notes(new Callback<NotesResponse>() {
+            @Override
+            public void success(NotesResponse notesResponse, Response response) {
+                    notesSuccess(notesResponse,response);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                notesError("");
+            }
+        });
+    }
+
+    private void notesSuccess(NotesResponse notesResponse, Response response) {
+        notesView.hideLoading();
+
+        if(notesResponse.isSuccess()){
+            List<NoteEntity> notes= notesResponse.getData();
+            notesView.renderNotes(notes);
+        }
+
+    }
+    private void notesError(String messageError){
+        notesView.hideLoading();
+        notesView.onMessageError(messageError);
+    }
+}
+```
+
 5. Referencias
 Librerías que vamos a usar, Retrofit, OkHttp y GSON
 
