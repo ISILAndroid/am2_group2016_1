@@ -228,7 +228,8 @@ public class LogInResponse {
  3.8 De la conexión recibimos 2 tipos de respuesta: un SUCCESS y FAILURE, en donde informamos a la vista si la autenticación fue exitosa o si ocurrio algún error.
  
 4 . Listar notas
- 4.1  Revisamos la documentación en la sección Data : https://backendless.com/documentation/data/rest/data_retrieving_properties_of_the_d.htm
+
+4.1  Revisamos la documentación en la sección Data : https://backendless.com/documentation/data/rest/data_retrieving_properties_of_the_d.htm
  ```
  method : GET
  url : https://api.backendless.com/<version>/data/<table-name>/properties
