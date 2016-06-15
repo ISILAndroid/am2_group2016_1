@@ -1,13 +1,11 @@
 # am2_group2016_1
 Curso de Aplicaciones Móviles II - Grupo 2016-I
 
-Fragments
+Samples
 
-    - Conceptos
-    - Fragments mediante XML
+    - Navigation Drawer
     
     
 Referencias:
-
-http://developer.android.com/intl/es/guide/components/fragments.html
+ [Navigation Drawer](https://developer.android.com/training/implementing-navigation/nav-drawer.html)
     
