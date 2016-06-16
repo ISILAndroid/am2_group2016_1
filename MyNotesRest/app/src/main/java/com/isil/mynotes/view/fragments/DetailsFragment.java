@@ -1,6 +1,7 @@
 package com.isil.mynotes.view.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,9 +12,12 @@ import android.widget.EditText;
 
 import com.isil.mynotes.R;
 import com.isil.mynotes.model.entity.NoteEntity;
+import com.isil.mynotes.presenter.EditNotePresenter;
+import com.isil.mynotes.presenter.EditNoteView;
+import com.isil.mynotes.presenter.NotePresenter;
 import com.isil.mynotes.view.listeners.OnNoteListener;
 
-public class DetailsFragment extends Fragment {
+public class DetailsFragment extends Fragment implements EditNoteView {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,6 +34,7 @@ public class DetailsFragment extends Fragment {
 
     private OnNoteListener mListener;
     private NoteEntity noteEntity;
+    private EditNotePresenter editNotePresenter;
 
     // TODO: Rename and change types and number of parameters
     public static DetailsFragment newInstance(String param1, String param2) {
@@ -88,6 +93,10 @@ public class DetailsFragment extends Fragment {
         eteName= (EditText)getView().findViewById(R.id.eteName);
         eteDesc= (EditText)getView().findViewById(R.id.eteDesc);
 
+
+        editNotePresenter= new EditNotePresenter();
+        editNotePresenter.attachedView(this);
+
         if(getArguments()!=null)
         {
             noteEntity= (NoteEntity)getArguments().getSerializable("NOTE");
@@ -113,9 +122,18 @@ public class DetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //editNote();
+                editNoteCloud();
             }
         });
     }
+
+    private void editNoteCloud() {
+        String objectId= noteEntity.getObjectId();
+        String name= eteName.getText().toString().trim();
+        String desc= eteDesc.getText().toString().trim();
+        editNotePresenter.editNote(objectId,name,desc);
+    }
+
     private void editNote()
     {
         //TODO validar campos
@@ -132,5 +150,30 @@ public class DetailsFragment extends Fragment {
 
         //cerrar la pantalla
         getActivity().finish();
+    }
+
+    @Override
+    public void showLoading() {
+        mListener.showParentLoading();
+    }
+
+    @Override
+    public void hideLoading() {
+        mListener.hideParentLoading();
+    }
+
+    @Override
+    public void onMessageError(String message) {
+        mListener.showMessage(message);
+    }
+
+    @Override
+    public void editNoteSuccess() {
+        getActivity().finish();
+    }
+
+    @Override
+    public Context getContext() {
+        return getActivity();
     }
 }
