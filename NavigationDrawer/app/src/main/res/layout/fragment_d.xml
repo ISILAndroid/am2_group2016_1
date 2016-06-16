@@ -5,9 +5,13 @@
     tools:context="com.example.android.navigationdrawerexample.fragments.DFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:background="#000000"
+        android:src="@drawable/earth"
+        android:gravity="center"
+        android:padding="32dp" />
 
 </FrameLayout>

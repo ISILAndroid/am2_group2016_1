@@ -86,5 +86,17 @@ public class DFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
+        getView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mListener!=null){
+                    mListener.showMessageFragment("Mensaje", "Frag D");
+                }
+            }
+        });
+    }
 }

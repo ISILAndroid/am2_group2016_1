@@ -43,6 +43,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.android.navigationdrawerexample.fragments.AFragment;
+import com.example.android.navigationdrawerexample.fragments.BFragment;
+import com.example.android.navigationdrawerexample.fragments.CFragment;
+import com.example.android.navigationdrawerexample.fragments.DFragment;
 
 /**
  * This example illustrates a common usage of the DrawerLayout widget
@@ -81,10 +84,16 @@ public class MainActivity extends AppCompatActivity implements OnNavigationListe
     private String[] mPlanetTitles;
     private Toolbar toolbar;
 
+    private AFragment aFragment;
+    private BFragment bFragment;
+    private CFragment cFragment;
+    private DFragment dFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setupFragments();
 
         toolbar= (Toolbar) findViewById(R.id.toolbar);
         mTitle = mDrawerTitle = getTitle();
@@ -129,6 +138,13 @@ public class MainActivity extends AppCompatActivity implements OnNavigationListe
         }
     }
 
+    private void setupFragments() {
+        aFragment= AFragment.newInstance(null,null);
+        bFragment= BFragment.newInstance(null,null);
+        cFragment= CFragment.newInstance(null,null);
+        dFragment= DFragment.newInstance(null,null);
+    }
+
    /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -155,6 +171,11 @@ public class MainActivity extends AppCompatActivity implements OnNavigationListe
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void showMessageFragment(String message, String fragmentName) {
+        Toast.makeText(this, "fragment "+fragmentName+ " msg : "+message,Toast.LENGTH_LONG).show();
+    }
+
     /* The click listner for ListView in the navigation drawer */
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
@@ -165,10 +186,11 @@ public class MainActivity extends AppCompatActivity implements OnNavigationListe
 
     private void selectItem(int position) {
         // update the main content by replacing fragments
-        Fragment fragment = new AFragment();
+        /*Fragment fragment = new AFragment();
         Bundle args = new Bundle();
         args.putInt(AFragment.ARG_PLANET_NUMBER, position);
-        fragment.setArguments(args);
+        fragment.setArguments(args);*/
+        Fragment fragment= factoryFragment(position);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
@@ -177,6 +199,15 @@ public class MainActivity extends AppCompatActivity implements OnNavigationListe
         mDrawerList.setItemChecked(position, true);
         setTitle(mPlanetTitles[position]);
         mDrawerLayout.closeDrawer(mDrawerList);
+    }
+
+    private Fragment factoryFragment(int position) {
+        switch (position){
+            case 0: return aFragment;
+            case 1: return bFragment;
+            case 2: return cFragment;
+            default: return dFragment;
+        }
     }
 
     @Override
