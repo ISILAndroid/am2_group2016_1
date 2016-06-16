@@ -4,6 +4,7 @@ Curso de Aplicaciones Móviles II - Grupo 2016-I
 # Conexión Remota
 
 Editar y Eliminar elementos 
+
 Agregamos a nuestra clase "ApiClient las acciones de editar y eliminar"
 
 ```
@@ -131,6 +132,7 @@ public class ApiClient {
 }
 ```
 1. Editar :
+
 EditNotePresenter
 ```
 package com.isil.mynotes.presenter;
