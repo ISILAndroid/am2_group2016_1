@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,16 +13,19 @@ import android.widget.EditText;
 
 import com.isil.mynotes.R;
 import com.isil.mynotes.model.entity.NoteEntity;
+import com.isil.mynotes.presenter.DeleteNotePresenter;
+import com.isil.mynotes.presenter.DeleteNoteView;
 import com.isil.mynotes.presenter.EditNotePresenter;
 import com.isil.mynotes.presenter.EditNoteView;
 import com.isil.mynotes.presenter.NotePresenter;
 import com.isil.mynotes.view.listeners.OnNoteListener;
 
-public class DetailsFragment extends Fragment implements EditNoteView {
+public class DetailsFragment extends Fragment implements EditNoteView, DeleteNoteView {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = "DetailsFragment";
 
     private Button btnDeleteNote;
     private Button btnEditNote;
@@ -35,6 +39,7 @@ public class DetailsFragment extends Fragment implements EditNoteView {
     private OnNoteListener mListener;
     private NoteEntity noteEntity;
     private EditNotePresenter editNotePresenter;
+    private DeleteNotePresenter deleteNotePresenter;
 
     // TODO: Rename and change types and number of parameters
     public static DetailsFragment newInstance(String param1, String param2) {
@@ -97,6 +102,9 @@ public class DetailsFragment extends Fragment implements EditNoteView {
         editNotePresenter= new EditNotePresenter();
         editNotePresenter.attachedView(this);
 
+        deleteNotePresenter= new DeleteNotePresenter();
+        deleteNotePresenter.attachedView(this);
+
         if(getArguments()!=null)
         {
             noteEntity= (NoteEntity)getArguments().getSerializable("NOTE");
@@ -115,6 +123,7 @@ public class DetailsFragment extends Fragment implements EditNoteView {
             @Override
             public void onClick(View v) {
                 //mListener.deleteNote(noteEntity);
+                deleteNoteCloud();
             }
         });
 
@@ -125,6 +134,12 @@ public class DetailsFragment extends Fragment implements EditNoteView {
                 editNoteCloud();
             }
         });
+    }
+
+    private void deleteNoteCloud() {
+        String objectId= noteEntity.getObjectId();
+        Log.v(TAG, "deleteNote " + objectId);
+        deleteNotePresenter.deleteNote(objectId);
     }
 
     private void editNoteCloud() {
@@ -165,6 +180,11 @@ public class DetailsFragment extends Fragment implements EditNoteView {
     @Override
     public void onMessageError(String message) {
         mListener.showMessage(message);
+    }
+
+    @Override
+    public void deleteNoteSuccess() {
+        getActivity().finish();
     }
 
     @Override

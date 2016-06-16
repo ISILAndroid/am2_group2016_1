@@ -101,15 +101,14 @@ public class ApiClient {
         @PUT("/v1/data/Notes")
         void editNote(@Body EditNoteRaw raw, Callback<NoteResponse> callback);
 
+        //Eliminar Notas
         @Headers({
-                "Content-Type: application/json",
                 "application-id: B9D12B47-6B88-8471-FFAD-2B4FFD1EA100",
                 "secret-key: 46C1AEC7-6BA7-D1C7-FF6A-FD9EA95C0C00",
                 "application-type: REST"
         })
-        //Eliminar Notas
-        @DELETE("/v1/data/Notes/{id}")
-        void deleteNote(@Path("object-id") int objectId, Callback<NoteResponse> callback);
+        @DELETE("/v1/data/Notes/{object-id}")
+        void deleteNote(@Path("object-id") String objectId, Callback<NoteResponse> callback);
 
     }
 
