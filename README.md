@@ -1,450 +1,118 @@
 # am2_group2016_1
-Curso de Aplicaciones Móviles II - Grupo 2016-I
+Aplicaciones Móviles II - Android ISIL
 
-# Conexión Remota
+## Lesson 10
 
-Editar y Eliminar elementos 
+* Google Maps
+    - Configuración
+        1. Crear un proyecto en [Google Console API](https://console.developers.google.com/)
+        ![1](https://github.com/ISILAndroid/am2_group2015_2/blob/Lesson10/images/gm1.png)
+        2. Agregamos el API de Google Maps Android API V2.
+        ![2](https://github.com/ISILAndroid/am2_group2015_2/blob/Lesson10/images/gm2.png)
+        3. Luego creamos las credenciales para nuestro proyecto Android.
+         ![3](https://github.com/ISILAndroid/am2_group2015_2/blob/Lesson10/images/gm3.png)
+        4. Agregamos una clave de API de Android y lo guardamos.
+         ![4](https://github.com/ISILAndroid/am2_group2015_2/blob/Lesson10/images/gm4.png)
 
-Agregamos a nuestra clase "ApiClient las acciones de editar y eliminar"
+    - Proyecto Android
+        1. Agregamos la dependencia de Google Play services
 
-```
-package com.isil.mynotes.storage.request;
-
-import com.isil.mynotes.storage.entity.EditNoteRaw;
-import com.isil.mynotes.storage.entity.LogInRaw;
-import com.isil.mynotes.storage.entity.LogInResponse;
-import com.isil.mynotes.storage.entity.NoteRaw;
-import com.isil.mynotes.storage.entity.NoteResponse;
-import com.isil.mynotes.storage.entity.NotesResponse;
-import com.squareup.okhttp.OkHttpClient;
-
-import java.util.concurrent.TimeUnit;
-
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.client.OkClient;
-import retrofit.http.Body;
-import retrofit.http.DELETE;
-import retrofit.http.GET;
-import retrofit.http.Headers;
-import retrofit.http.POST;
-import retrofit.http.PUT;
-import retrofit.http.Path;
-
-/**
- * Created by em on 8/06/16.
- */
-public class ApiClient {
-
-    private static final String TAG = "ApiClient";
-    private static final String PATH="http://api.backendless.com";
-
-    private static ServicesApiInterface servicesApiInterface;
-
-    public static ServicesApiInterface getMyApiClient() {
-
-        if (servicesApiInterface == null) {
-
-            RestAdapter restAdapter = new RestAdapter.Builder()
-                    .setEndpoint(PATH)
-                    .setClient(new OkClient(getClient()))
-                    .setLogLevel(RestAdapter.LogLevel.FULL)
-                    .build();
-
-            servicesApiInterface = restAdapter.create(ServicesApiInterface.class);
+        ```
+        dependencies {
+                compile fileTree(dir: 'libs', include: ['*.jar'])
+                compile 'com.android.support:appcompat-v7:22.2.0'
+                compile 'com.google.android.gms:play-services:6.1.71'
         }
-        return servicesApiInterface;
-    }
+        ```
 
-    public interface ServicesApiInterface {
+        2. Configuración del AndroidManifest
+            Permisos requeridos
+            Habilitar OpenGL
+            Metadata requerida para google play services y google maps
 
-        ///<version name>/users/login
-        //@Headers({"Content-Type: application/json"})
+        ```
+            <permission
+            android:name="com.emedinaa.am2googlemaps.permission.MAPS_RECEIVE"
+            android:protectionLevel="signature" >
+            </permission>
+            <uses-permission android:name="com.emedinaa.am2googlemaps.permission.MAPS_RECEIVE" />
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+            <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+        ```
 
+        ```
+            <uses-feature
+            android:glEsVersion="0x00020000"
+            android:required="true" />
+        ```
 
-        @Headers({
-                "Content-Type: application/json",
-                "application-id: B9D12B47-6B88-8471-FFAD-2B4FFD1EA100",
-                "secret-key: 46C1AEC7-6BA7-D1C7-FF6A-FD9EA95C0C00",
-                "application-type: REST"
-        })
-        //v1/users/login
-        @POST("/v1/users/login")
-        void login(@Body LogInRaw raw, Callback<LogInResponse> callback);
+        ```
+            <meta-data
+                android:name="com.google.android.gms.version"
+                android:value="@integer/google_play_services_version" />
+            <meta-data
+                android:name="com.google.android.geo.API_KEY"
+                android:value="@string/gmaps_key" />
+        ```
 
+        3. Agregar al XML del activity el fragment de Google Maps
 
-        @Headers({
-                "Content-Type: application/json",
-                "application-id: B9D12B47-6B88-8471-FFAD-2B4FFD1EA100",
-                "secret-key: 46C1AEC7-6BA7-D1C7-FF6A-FD9EA95C0C00",
-                "application-type: REST"
-        })
-        //v1/data/Notes
-        @GET("/v1/data/Notes")
-        void notes( Callback<NotesResponse> callback);
+        ```
+            <fragment
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            class="com.google.android.gms.maps.SupportMapFragment"
+            android:id="@+id/map"/>
+        ```
 
+        4. Iniciamos el Map en la Activity
 
-        @Headers({
-                "Content-Type: application/json",
-                "application-id: B9D12B47-6B88-8471-FFAD-2B4FFD1EA100",
-                "secret-key: 46C1AEC7-6BA7-D1C7-FF6A-FD9EA95C0C00",
-                "application-type: REST"
-        })
-        @POST("/v1/data/Notes")
-        void addNote(@Body NoteRaw raw, Callback<NoteResponse> callback);
-
-        //Editar notas
-        /*
-        {
-             "objectId" : "28325E9F-2DED-D3CA-FFC6-C76911AFBB00"
-             "name" : "James Bond",
-             "age" : 33,
-             "phoneNumber" : "+44123456789",
+        ```
+             private void initMap() {
+            try {
+                if (map == null)
+                {
+                    // above API 11
+                    map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
+                    map.getUiSettings().setAllGesturesEnabled(true);
+                    map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                    map.setMyLocationEnabled(true);
+                    map.getUiSettings().setZoomControlsEnabled(false);
+                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(defaultLat, defaultLng), ZOOM));
+                    map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                        @Override
+                        public void onMapClick(LatLng point)
+                        {
+                            selected=true;
+                            if (marker != null) {
+                                marker.remove();
+                            }
+                            marker = map.addMarker(new MarkerOptions()
+                                    .position(point)
+                                    .title("Mi ubicación")
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                            marker.showInfoWindow();
+                            userLat=point.latitude;
+                            userLng = point.longitude;
+                            Toast.makeText(MainActivity.this,"Lat & Lng "+userLat+" "+userLng,Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }catch (Exception e){
+                e.printStackTrace();
             }
-         */
-        @Headers({
-                "Content-Type: application/json",
-                "application-id: B9D12B47-6B88-8471-FFAD-2B4FFD1EA100",
-                "secret-key: 46C1AEC7-6BA7-D1C7-FF6A-FD9EA95C0C00",
-                "application-type: REST"
-        })
-        @PUT("/v1/data/Notes")
-        void editNote(@Body EditNoteRaw raw, Callback<NoteResponse> callback);
-
-        @Headers({
-                "Content-Type: application/json",
-                "application-id: B9D12B47-6B88-8471-FFAD-2B4FFD1EA100",
-                "secret-key: 46C1AEC7-6BA7-D1C7-FF6A-FD9EA95C0C00",
-                "application-type: REST"
-        })
-        //Eliminar Notas
-        @DELETE("/v1/data/Notes/{id}")
-        void deleteNote(@Path("object-id") int objectId, Callback<NoteResponse> callback);
-
-    }
-
-    private static OkHttpClient getClient() {
-        OkHttpClient client = new OkHttpClient();
-        client.setConnectTimeout(2, TimeUnit.MINUTES);
-        client.setReadTimeout(2, TimeUnit.MINUTES);
-        return client;
-    }
-}
-```
-1. Editar :
-
-EditNotePresenter
-```
-package com.isil.mynotes.presenter;
-
-import com.isil.mynotes.storage.entity.EditNoteRaw;
-import com.isil.mynotes.storage.entity.NoteRaw;
-import com.isil.mynotes.storage.entity.NoteResponse;
-import com.isil.mynotes.storage.request.ApiClient;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-
-/**
- * Created by Alumno-J on 15/06/2016.
- */
-public class EditNotePresenter {
-
-    private static final String TAG = "EditNotePresenter";
-    private EditNoteView editNoteView;
-    private String objectId, name,description;
-
-    public   void attachedView(EditNoteView editNoteView){
-
-        this.editNoteView = editNoteView;
-    }
-
-    public  void detachView(){
-        this.editNoteView=null;
-    }
-
-    public void editNote(String objectId,String name, String desc ) {
-        EditNoteRaw editNoteRaw = new EditNoteRaw();
-        editNoteRaw.setObjectId(objectId);
-        editNoteRaw.setName(name);
-        editNoteRaw.setDescription(desc);
-
-        editNoteView.showLoading();
-        ApiClient.getMyApiClient().editNote(editNoteRaw, new Callback<NoteResponse>() {
-            @Override
-            public void success(NoteResponse noteResponse, Response response) {
-                editNoteSuccess(noteResponse, response);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                editNoteError(error.toString());
-            }
-        });
-    }
-
-    private void editNoteSuccess(NoteResponse noteResponse, Response response) {
-        editNoteView.hideLoading();
-        editNoteView.editNoteSuccess();
-    }
-
-    private void editNoteError(String messageError) {
-        editNoteView.hideLoading();
-        editNoteView.onMessageError(messageError);
-    }
-}
-
-```
-Implementación en el fragment "DetailsFragment"
-
-```
-package com.isil.mynotes.view.fragments;
-
-import android.app.Activity;
-import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-
-import com.isil.mynotes.R;
-import com.isil.mynotes.model.entity.NoteEntity;
-import com.isil.mynotes.presenter.EditNotePresenter;
-import com.isil.mynotes.presenter.EditNoteView;
-import com.isil.mynotes.presenter.NotePresenter;
-import com.isil.mynotes.view.listeners.OnNoteListener;
-
-public class DetailsFragment extends Fragment implements EditNoteView {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private Button btnDeleteNote;
-    private Button btnEditNote;
-    private EditText eteName;
-    private EditText eteDesc;
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnNoteListener mListener;
-    private NoteEntity noteEntity;
-    private EditNotePresenter editNotePresenter;
-
-    // TODO: Rename and change types and number of parameters
-    public static DetailsFragment newInstance(String param1, String param2) {
-        DetailsFragment fragment = new DetailsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    public DetailsFragment() {
-        // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_details, container, false);
-    }
-
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (OnNoteListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        btnDeleteNote=(Button)getView().findViewById(R.id.btnDeleteNote);
-        btnEditNote=(Button)getView().findViewById(R.id.btnEditNote);
-
-        eteName= (EditText)getView().findViewById(R.id.eteName);
-        eteDesc= (EditText)getView().findViewById(R.id.eteDesc);
-
-
-        editNotePresenter= new EditNotePresenter();
-        editNotePresenter.attachedView(this);
-
-        if(getArguments()!=null)
-        {
-            noteEntity= (NoteEntity)getArguments().getSerializable("NOTE");
-        }
-        if(noteEntity!=null)
-        {
-            //TODO mostrar INFO
-            String name= noteEntity.getName();
-            String desc= noteEntity.getDescription();
-
-            eteName.setText(name);
-            eteDesc.setText(desc);
         }
 
-        btnDeleteNote.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //mListener.deleteNote(noteEntity);
-            }
-        });
+        ```
 
-        btnEditNote.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //editNote();
-                editNoteCloud();
-            }
-        });
-    }
+Resultado
+    ![5](https://github.com/ISILAndroid/am2_group2015_2/blob/Lesson10/images/gm5.png)
 
-    private void editNoteCloud() {
-        String objectId= noteEntity.getObjectId();
-        String name= eteName.getText().toString().trim();
-        String desc= eteDesc.getText().toString().trim();
-        editNotePresenter.editNote(objectId,name,desc);
-    }
+## Referencias
 
-    private void editNote()
-    {
-        //TODO validar campos
-        //extraer lo valores
-        String name= eteName.getText().toString().trim();
-        String desc= eteDesc.getText().toString().trim();
-        NoteEntity nNoteEntity=new NoteEntity();
-        nNoteEntity.setName(name);
-        nNoteEntity.setDescription(desc);
-        nNoteEntity.setId(noteEntity.getId());
-
-        //llamar el método de crudoperation
-        mListener.getCrudOperations().updateNote(nNoteEntity);
-
-        //cerrar la pantalla
-        getActivity().finish();
-    }
-
-    @Override
-    public void showLoading() {
-        mListener.showParentLoading();
-    }
-
-    @Override
-    public void hideLoading() {
-        mListener.hideParentLoading();
-    }
-
-    @Override
-    public void onMessageError(String message) {
-        mListener.showMessage(message);
-    }
-
-    @Override
-    public void editNoteSuccess() {
-        getActivity().finish();
-    }
-
-    @Override
-    public Context getContext() {
-        return getActivity();
-    }
-}
-
-```
-
-2.  Eliminar :
-
-DeleteNotePresenter
-
-```
-package com.isil.mynotes.presenter;
-
-import com.isil.mynotes.storage.entity.EditNoteRaw;
-import com.isil.mynotes.storage.entity.NoteResponse;
-import com.isil.mynotes.storage.request.ApiClient;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-
-/**
- * Created by Alumno-J on 15/06/2016.
- */
-public class DeleteNotePresenter {
-
-    private static final String TAG = "DeleteNotePresenter";
-    private DeleteNoteView deleteNoteView;
-    private String objectId;
-
-    public   void attachedView(DeleteNoteView deleteNoteView){
-
-        this.deleteNoteView = deleteNoteView;
-    }
-
-    public  void detachView(){
-        this.deleteNoteView=null;
-    }
-
-    public void deleteNote(String objectId ) {
-        this.deleteNoteView.showLoading();
-        ApiClient.getMyApiClient().deleteNote(objectId, new Callback<NoteResponse>() {
-            @Override
-            public void success(NoteResponse noteResponse, Response response) {
-                deleteNoteSuccess(noteResponse, response);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                deleteNoteError(error.toString());
-            }
-        });
-    }
-
-    private void deleteNoteSuccess(NoteResponse noteResponse, Response response) {
-        this.deleteNoteView.hideLoading();
-        this.deleteNoteView.deleteNoteSuccess();
-    }
-    private void deleteNoteError(String messageError){
-        this.deleteNoteView.hideLoading();
-        this.deleteNoteView.onMessageError(messageError);
-    }
-}
-```
-
-
-3.  Referencias
-Librerías que vamos a usar, Retrofit, OkHttp y GSON
-
-- http://square.github.io/retrofit/
-- http://square.github.io/okhttp/
-- https://github.com/google/gson
-
+* Google Maps Android API V2 [Link](https://developers.google.com/maps/documentation/android-api/)
+* Google Console API [Link](https://console.developers.google.com/)
