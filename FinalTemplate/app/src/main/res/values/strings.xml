@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Final AM2</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="username">Username</string>
+    <string name="passsword">Password</string>
+    <string name="ingresar">Ingresar</string>
+
+    <string name="perfil">Perfil</string>
+    <string name="notas">Notas</string>
+    <string name="facultades">Facultades</string>
+    <string name="logout">Cerrar Sesión</string>
+
+    <string name="all_items">All Items</string>
+    <string name="by_category">By Category</string>
+    <string name="settings">Settings</string>
+    <string name="logoutMenu">Log Out</string>
+</resources>
